@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damzz25 Prjkt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Material+Icons+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            /* Material Expressive Color Scheme */
+            --primary-color: #6750A4;
+            --secondary-color: #7D5260;
+            --accent-color: #B58392;
+            --surface-color: #FFFBFE;
+            --surface-dim: #F5EFF7;
+            --surface-bright: #FFFBFE;
+            --surface-container-low: #F7F2FA;
+            --surface-container-high: #ECE6F0;
+            --on-surface: #1C1B1F;
+            --on-surface-variant: #49454F;
+
+            /* Dark mode colors */
+            --dark-primary: #D0BCFF;
+            --dark-secondary: #EFB8C8;
+            --dark-surface: #1C1B1F;
+            --dark-surface-dim: #141218;
+            --dark-surface-bright: #36343B;
+            --dark-surface-container-low: #211F26;
+            --dark-surface-container-high: #2B2930;
+            --dark-on-surface: #E6E1E5;
+            --dark-on-surface-variant: #CAC4D0;
+
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            --elevation-1: 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+            --elevation-2: 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+            --elevation-3: 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Light mode defaults */
+        body {
+            --bg-color: var(--surface-dim);
+            --text-color: var(--on-surface);
+            --card-bg: var(--surface-color);
+            --section-bg: var(--surface-container-low);
+            --info-bg: var(--surface-container-high);
+            --warning-bg: #F9DEDC;
+            --warning-color: #410E0B;
+        }
+
+        /* Dark mode colors */
+        [data-theme="dark"] {
+            --bg-color: var(--dark-surface-dim);
+            --text-color: var(--dark-on-surface);
+            --card-bg: var(--dark-surface);
+            --section-bg: var(--dark-surface-container-low);
+            --info-bg: var(--dark-surface-container-high);
+            --warning-bg: #410E0B;
+            --warning-color: #F9DEDC;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Material Typography */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.25;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        p, li {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+        }
+
+        /* Material Navigation */
+        nav {
+            background: var(--primary-color);
+            padding: 16px 0;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--elevation-1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            margin: 0 4px;
+            display: inline-block;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            border-radius: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        nav a:hover::after {
+            opacity: 0.08;
+        }
+
+        nav a:active::after {
+            opacity: 0.12;
+        }
+
+        .nav-img {
+            position: absolute;
+            right: 80px;
+            top: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: var(--elevation-1);
+            cursor: pointer;
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .nav-img:hover {
+            transform: scale(1.1);
+            box-shadow: var(--elevation-2);
+        }
+
+        .theme-toggle {
+            position: absolute;
+            right: 20px;
+            top: 16px;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 2;
+            transition: var(--transition);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .theme-toggle:active {
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 20px;
+            top: 68px;
+            background: var(--section-bg);
+            border-radius: 12px;
+            box-shadow: var(--elevation-3);
+            min-width: 200px;
+            text-align: left;
+            z-index: 10;
+            overflow: hidden;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            border-bottom: 1px solid rgba(var(--text-color), 0.1);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .dropdown-menu a::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--text-color);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .dropdown-menu a:hover::after {
+            opacity: 0.08;
+        }
+
+        .dropdown-menu a:active::after {
+            opacity: 0.12;
+        }
+
+        .dropdown-menu a i {
+            margin-right: 12px;
+            color: var(--primary-color);
+            width: 24px;
+            text-align: center;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .container {
+            max-width: 840px;
+            margin: 32px auto;
+            padding: 0 24px;
+        }
+
+        section {
+            display: none;
+            padding: 24px;
+            margin: 24px 0;
+            background: var(--section-bg);
+            border-radius: 16px;
+            box-shadow: var(--elevation-1);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section.active {
+            display: block;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 24px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 64px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--on-surface-variant);
+        }
+
+        [data-theme="dark"] p {
+            color: var(--dark-on-surface-variant);
+        }
+
+        ul {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            list-style-type: none;
+            padding-left: 32px;
+            color: var(--on-surface-variant);
+        }
+
+        [data-theme="dark"] li {
+            color: var(--dark-on-surface-variant);
+        }
+
+        li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .telegram-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-block;
+            position: relative;
+        }
+
+        .telegram-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .telegram-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .credit-person {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 48px 0 32px;
+        }
+
+        .hero h1 {
+            font-size: 2.75rem;
+            margin-bottom: 16px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.25px;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 0.875rem;
+            margin-top: 48px;
+            color: var(--on-surface-variant);
+        }
+
+        [data-theme="dark"] .footer {
+            color: var(--dark-on-surface-variant);
+        }
+
+        /* Material Cards */
+        .device-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .device-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--elevation-1);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+        }
+
+        .device-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--elevation-3);
+        }
+
+        .device-image {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            background: var(--info-bg);
+            padding: 16px;
+        }
+
+        .device-name {
+            padding: 16px 16px 8px;
+            font-weight: 500;
+            color: var(--text-color);
+            border-top: 1px solid rgba(var(--text-color), 0.1);
+        }
+
+        .device-group {
+            padding: 0 16px 16px;
+            font-size: 0.875rem;
+        }
+
+        .group-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+            word-break: break-all;
+        }
+
+        .group-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Material Buttons */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 24px;
+            transition: var(--transition);
+            box-shadow: var(--elevation-1);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .download-btn:hover {
+            box-shadow: var(--elevation-2);
+        }
+
+        .download-btn:hover::after {
+            opacity: 0.08;
+        }
+
+        .download-btn:active::after {
+            opacity: 0.12;
+        }
+
+        .download-btn i {
+            margin-right: 8px;
+        }
+
+        .download-info {
+            background: var(--info-bg);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 32px 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .download-warning {
+            color: var(--warning-color);
+            font-weight: 500;
+            margin-top: 24px;
+            padding: 16px;
+            background: var(--warning-bg);
+            border-radius: 12px;
+            border-left: 4px solid var(--warning-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav a {
+                font-size: 0.875rem;
+                padding: 8px 16px;
+            }
+
+            .nav-img {
+                top: 12px;
+                right: 64px;
+                width: 36px;
+                height: 36px;
+            }
+
+            .theme-toggle {
+                right: 16px;
+                top: 12px;
+                width: 36px;
+                height: 36px;
+                font-size: 20px;
+            }
+
+            .dropdown-menu {
+                right: 16px;
+                top: 56px;
+                min-width: 180px;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .device-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav a {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+                margin: 0 2px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .device-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+
+            .device-image {
+                height: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+        <img src="https://raw.githubusercontent.com/Dmr255/GRETONGDev/refs/heads/master/damzzprjkt.jpg" alt="Logo" class="nav-img" id="navImg">
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+        <div class="dropdown-menu" id="dropdownMenu">
+            <a href="#download" class="dropdown-link"><i class="fas fa-download"></i> Download</a>
+            <a href="#contact" class="dropdown-link"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="#credits" class="dropdown-link"><i class="fas fa-heart"></i> Credits</a>
+            <a href="#linked" class="dropdown-link"><i class="fas fa-heart"></i> Friend Channel</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Damzz25 Prjkt</h1>
+            <p>Everything Port File/My Project I'll upload to this website</p>
+        </div>
+
+        <section id="about" class="active">
+            <h2>About This Project</h2>
+            <p>Welcome to my personal project showcase website. Here you'll find all my port files and development projects that I've worked on.</p>
+            <p>I'm passionate about creating and sharing my work with the community, and this platform serves as a central hub for all my releases and updates.</p>
+            <p>Feel free to explore and don't hesitate to reach out if you have any questions or feedback!</p>
+        </section>
+
+        <section id="download">
+            <h2>Download ROM Ports</h2>
+            <p>Select your device from the list below to download the appropriate ROM:</p>
+
+            <div class="device-gallery">
+                <div class="device-card">
+                    <img src="https://raw.githubusercontent.com/Dmr255/GRETONGDev/refs/heads/master/eclipse.png" alt="Infinix Zero 5G Eclipse" class="device-image" onerror="this.src='https://via.placeholder.com/200x180?text=Infinix+Zero+5G'">
+                    <div class="device-name">Infinix Zero 5G 2023 ID/Eclipse</div>
+                    <div class="device-group">
+                        <a href="https://t.me/Infinix_Zero_5G_Indonesia" class="group-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Device Group
+                        </a>
+                    </div>
+                </div>
+                <div class="device-card">
+                    <img src="https://raw.githubusercontent.com/Dmr255/GRETONGDev/refs/heads/master/eclipse.png" alt="Infinix Zero 5G Lunar" class="device-image" onerror="this.src='https://via.placeholder.com/200x180?text=Infinix+Zero+5G'">
+                    <div class="device-name">Infinix Zero 5G 2023 IN/Lunar</div>
+                    <div class="device-group">
+                        <a href="https://t.me/izero5g" class="group-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Device Group
+                        </a>
+                    </div>
+                </div>
+                <div class="device-card">
+                    <img src="https://raw.githubusercontent.com/Dmr255/GRETONGDev/refs/heads/master/NovaX.jpg" alt="Infinix Hot 30i NovaX" class="device-image" onerror="this.src='https://via.placeholder.com/200x180?text=Infinix+Hot+30i'">
+                    <div class="device-name">Infinix Hot 30i/NovaX</div>
+                    <div class="device-group">
+                        <a href="https://t.me/infinixhot30indonesia" class="group-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Device Group
+                        </a>
+                    </div>
+                </div>
+                <div class="device-card">
+                    <img src="https://raw.githubusercontent.com/Dmr255/GRETONGDev/refs/heads/master/Spark20.jpg" alt="Tecno Spark 20" class="device-image" onerror="this.src='https://via.placeholder.com/200x180?text=Tecno+Spark+20'">
+                    <div class="device-name">Tecno Spark 20/KJ5</div>
+                    <div class="device-group">
+                        <a href="https://t.me/kj5global" class="group-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Device Group
+                        </a>
+                    </div>
+                </div>
+                <div class="device-card">
+                    <img src="https://raw.githubusercontent.com/Dmr255/GRETONGDev/refs/heads/master/Spark20.jpg" alt="Tecno Spark 20" class="device-image" onerror="this.src='https://via.placeholder.com/200x180?text=Tecno+Spark+20'">
+                    <div class="device-name">Tecno Spark 20/KJ5n</div>
+                    <div class="device-group">
+                        <a href="https://t.me/kj5global" class="group-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Device Group
+                        </a>
+                    </div>
+                </div>
+                <div class="device-card">
+                    <img src="https://raw.githubusercontent.com/Dmr255/GRETONGDev/refs/heads/master/Spark10Pro.png" alt="Tecno Spark 10 Pro" class="device-image" onerror="this.src='https://via.placeholder.com/200x180?text=Tecno+Spark+10+Pro'">
+                    <div class="device-name">Tecno Spark 10 Pro/KI7</div>
+                    <div class="device-group">
+                        <a href="https://t.me/Spark10Pro" class="group-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Device Group
+                        </a>
+                    </div>
+                </div>
+                <div class="device-card">
+                    <img src="https://raw.githubusercontent.com/Dmr255/GRETONGDev/refs/heads/master/pova6.jpg" alt="Tecno Pova 6" class="device-image" onerror="this.src='https://via.placeholder.com/200x180?text=Tecno+Pova+6'">
+                    <div class="device-name">Tecno Pova 6/Neo 6/LI7</div>
+                    <div class="device-group">
+                        <a href="https://t.me/tecno_pova6_atau_6pro_indonesia" class="group-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Device Group
+                        </a>
+                    </div>
+                </div>
+                <div class="device-card">
+                    <img src="https://asset-a.grid.id/crop/0x0:0x0/360x240/photo/2020/04/22/3516880089.jpg" alt="Oppo A12" class="device-image" onerror="this.src='https://via.placeholder.com/200x180?text=Oppo+A12'">
+                    <div class="device-name">Oppo A12/CPH2083</div>
+                    <div class="device-group">
+                        <a href="https://t.me/oppoa12idn" class="group-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Device Group
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="download-info">
+                <h3><i class="fas fa-info-circle"></i> Download Information</h3>
+                <p>All ROMs are tested and verified before release. Please ensure you download the correct version for your device.</p>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="https://sourceforge.net/projects/damarrr/files/release-final/" class="download-btn" target="_blank">
+                    <i class="fas fa-download"></i> Download All ROMs 1
+                </a>
+            </div>
+            <div style="text-align: center;">
+                <a href="https://t.me/Damzz255" class="download-btn" target="_blank">
+                    <i class="fas fa-download"></i> Download All ROMs 2 (ask me at telegram group if you don't find your device rom)
+                </a>
+            </div>
+
+            <div class="download-warning">
+                <i class="fas fa-exclamation-triangle"></i> Warning: Flashing custom ROMs may void your warranty. Proceed at your own risk and I don't take any responsibilities of your wrong doings.
+            </div>
+        </section>
+
+        <section id="credits">
+            <h2>Credits</h2>
+            <p>This website and projects are created and maintained by: <strong>Damarjati25</strong></p>
+            <p>Special thanks to these amazing people who supported me:</p>
+            <ul>
+                <li><span class="credit-person">@Yuuta27</span> - A person who always supports me, makes me happy, and first person donate to me. Thanks big bro!</li>
+                <li><span class="credit-person">@S51iapa</span> - A person who always supports me, makes me happy, and my first tester also make me believe that i can doing this project. Thanks bro!</li>
+                <li><span class="credit-person">@diiityaaaa</span> - A person who always helps me whenever I have problems with my projects. Thanks my friend!</li>
+                <li><span class="credit-person">@MarkBehh @KazeTheLight @Nazephyrus</span> - They are really good people who taught me how to port ROMs. Thanks!</li>
+            </ul>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <p>Feel free to reach out through these channels:</p>
+            <p><i class="fab fa-telegram"></i> Telegram: <a href="https://t.me/LGIVPN" class="telegram-link" target="_blank">@LGIVPN</a></p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/Damzz25back" class="telegram-link" target="_blank">@Damzz25Prjkt</a></p>
+            <p>I'm always enjoy with your feedback, and questions about my projects.</p>
+        </section>
+        
+        <section id="linked">
+            <h2>Y'all is best people i'ver meet :)</h2>
+            <p>My Friend Channel:</p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/GudangGajelas" class="telegram-link" target="_blank">@All_In_One_GG</a></p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/DroidProjectCommunity" class="telegram-link" target="_blank">@DroidPrjkt</a></p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/graysfeathers" class="telegram-link" target="_blank">@Gray Raven's Main Base</a></p>
+			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/Shinlab" class="telegram-link" target="_blank">@Shinka Prjkt 1.0 [ Reborn ]</a></p>
+			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/nazeloans" class="telegram-link" target="_blank">@NBMRS</a></p>
+			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/Only_Mark" class="telegram-link" target="_blank">@OnlyMark</a></p>
+			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/Kaminarich_here" class="telegram-link" target="_blank">@Kaminari | AetheriumYT</a></p>
+			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/xiastuff" class="telegram-link" target="_blank">@.method get channel</a></p>
+			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/klikajatolol" class="telegram-link" target="_blank">@Random Prot</a></p>
+            <p>I'm always open to collaboration, feedback, and questions about my projects.</p>
+        </section>
+    </div>
+  <div class="pre-footer">
+    <div class="footer-logo">
+        <img src="https://raw.githubusercontent.com/Dmr255/GRETONGDev/master/damzzprjkt-logo.png" 
+             alt="Damzz25 Logo"
+             onerror="this.src='https://raw.githubusercontent.com/Dmr255/GRETONGDev/refs/heads/master/damzzprjkt.jpg'">
+    </div>
+</div>
+
+<div class="footer">
+    <p>&copy; 2025 Damarjati25 Projects.</p>
+</div>
+
+<style>
+    /* Tambahkan CSS ini di bagian <style> Anda */
+    .pre-footer {
+        text-align: center;
+        margin: 40px 0 0;
+        padding: 20px 0;
+    }
+
+    .footer-logo {
+        display: inline-block;
+        background: var(--card-bg);
+        padding: 16px;
+        border-radius: 16px;
+        box-shadow: var(--elevation-1);
+        transition: var(--transition);
+    }
+
+    .footer-logo:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--elevation-3);
+    }
+
+    .footer-logo img {
+        width: 300px;
+        height: 300px;
+        object-fit: contain;
+        border-radius: 12px;
+    }
+</style>
+
+    <script>
+        // Section switcher for About
+        document.querySelectorAll('nav > a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelectorAll('section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    const target = this.getAttribute('href');
+                    document.querySelector(target).classList.add('active');
+
+                    // Smooth scroll to section
+                    document.querySelector(target).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Dropdown logic
+        const navImg = document.getElementById('navImg');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        navImg.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener('click', function() {
+            dropdownMenu.style.display = 'none';
+        });
+
+        // Prevent dropdown from closing when clicking inside
+        dropdownMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Section switcher for dropdown links
+        document.querySelectorAll('.dropdown-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                dropdownMenu.style.display = 'none';
+                document.querySelectorAll('section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                const target = this.getAttribute('href');
+                document.querySelector(target).classList.add('active');
+
+                // Smooth scroll to section
+                document.querySelector(target).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add animation when scrolling to sections
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.5s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Device card click handler - now only triggers when clicking outside links
+        document.querySelectorAll('.device-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Don't do anything if user clicked on a link
+                if (e.target.tagName === 'A' || e.target.closest('a')) {
+                    return;
+                }
+
+                const deviceName = this.querySelector('.device-name').textContent;
+                alert(`You selected ${deviceName}. Redirecting to download page...`);
+                // You can add specific device download links here
+                window.location.href = "https://sourceforge.net/projects/damarrr/files/release-final/";
+            });
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme') || 
+                           (prefersDarkScheme.matches ? 'dark' : 'light');
+
+        if (currentTheme === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // Toggle theme
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.body.getAttribute('data-theme');
+
+            if (currentTheme === 'dark') {
+                document.body.removeAttribute('data-theme');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>
