@@ -143,25 +143,28 @@
         nav a:active::after {
             opacity: 0.12;
         }
-
-        .nav-img {
+        
+        .menu-toggle {
             position: absolute;
             right: 80px;
-            top: 12px;
+            top: 16px;
             width: 40px;
             height: 40px;
-            border-radius: 20px;
-            object-fit: cover;
-            border: 2px solid #fff;
-            box-shadow: var(--elevation-1);
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
             cursor: pointer;
             z-index: 2;
             transition: var(--transition);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .nav-img:hover {
-            transform: scale(1.1);
-            box-shadow: var(--elevation-2);
+        .menu-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.08);
         }
 
         .theme-toggle {
@@ -177,7 +180,7 @@
             cursor: pointer;
             z-index: 2;
             transition: var(--transition);
-            border-radius: 20px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -525,12 +528,13 @@
                 font-size: 0.875rem;
                 padding: 8px 16px;
             }
-
-            .nav-img {
-                top: 12px;
+            
+            .menu-toggle {
                 right: 64px;
+                top: 12px;
                 width: 36px;
                 height: 36px;
+                font-size: 20px;
             }
 
             .theme-toggle {
@@ -587,16 +591,21 @@
 </head>
 <body>
     <nav>
-        <a href="#about"><i class="fas fa-info-circle"></i> About</a>
-        <img src="https://raw.githubusercontent.com/Dmr255/GRETONGDev/refs/heads/master/damzzprjkt.jpg" alt="Logo" class="nav-img" id="navImg">
+        <a href="#home"><i class="fas fa-home"></i> Home</a>
+        
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        
         <button class="theme-toggle" id="themeToggle">
             <i class="fas fa-moon"></i>
         </button>
         <div class="dropdown-menu" id="dropdownMenu">
+            <a href="#about" class="dropdown-link"><i class="fas fa-info-circle"></i> About</a>
             <a href="#download" class="dropdown-link"><i class="fas fa-download"></i> Download</a>
             <a href="#contact" class="dropdown-link"><i class="fas fa-envelope"></i> Contact</a>
             <a href="#credits" class="dropdown-link"><i class="fas fa-heart"></i> Credits</a>
-            <a href="#linked" class="dropdown-link"><i class="fas fa-heart"></i> Friend Channel</a>
+            <a href="#linked" class="dropdown-link"><i class="fas fa-trophy"></i> Friend Channel</a>
         </div>
     </nav>
 
@@ -606,7 +615,14 @@
             <p>Everything Port File/My Project I'll upload to this website</p>
         </div>
 
-        <section id="about" class="active">
+        <section id="home" class="active">
+            <h2>Wellcome to my website</h2>
+            <p>Hello! Welcome to my project website. create a ported ROM for your Android device.</p>
+            <p>I'm passionate about developing and sharing my ports with the community. You can browse available projects, download files, and find contact information if you need help.</p>
+            <p>Please use the menu at the top right to explore other sections of the site. Thanks for visiting!</p>
+        </section>
+
+        <section id="about">
             <h2>About This Project</h2>
             <p>Welcome to my personal project showcase website. Here you'll find all my port files and development projects that I've worked on.</p>
             <p>I'm passionate about creating and sharing my work with the community, and this platform serves as a central hub for all my releases and updates.</p>
@@ -730,6 +746,7 @@
             <p>Feel free to reach out through these channels:</p>
             <p><i class="fab fa-telegram"></i> Telegram: <a href="https://t.me/LGIVPN" class="telegram-link" target="_blank">@LGIVPN</a></p>
             <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/Damzz25back" class="telegram-link" target="_blank">@Damzz25Prjkt</a></p>
+            <p><i class="fas fa-envelope-square"></i> E-mail: <a href="mailto:damarjatinurrohmad@protonmail.com" class="telegram-link">@damarjatinurrohmad@protonmail.com</a></p>
             <p>I'm always enjoy with your feedback, and questions about my projects.</p>
         </section>
         
@@ -739,14 +756,15 @@
             <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/GudangGajelas" class="telegram-link" target="_blank">@All_In_One_GG</a></p>
             <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/DroidProjectCommunity" class="telegram-link" target="_blank">@DroidPrjkt</a></p>
             <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/graysfeathers" class="telegram-link" target="_blank">@Gray Raven's Main Base</a></p>
-			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/Shinlab" class="telegram-link" target="_blank">@Shinka Prjkt 1.0 [ Reborn ]</a></p>
-			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/nazeloans" class="telegram-link" target="_blank">@NBMRS</a></p>
-			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/Only_Mark" class="telegram-link" target="_blank">@OnlyMark</a></p>
-			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/Kaminarich_here" class="telegram-link" target="_blank">@Kaminari | AetheriumYT</a></p>
-			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/xiastuff" class="telegram-link" target="_blank">@.method get channel</a></p>
-			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/klikajatolol" class="telegram-link" target="_blank">@Random Prot</a></p>
-			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/yeinzuuarchive" class="telegram-link" target="_blank">@Zuu Archive</a></p>
-			<p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/ryuustuff" class="telegram-link" target="_blank">@Ryuu Yapping</a></p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/Shinlab" class="telegram-link" target="_blank">@Shinka Prjkt 1.0 [ Reborn ]</a></p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/nazeloans" class="telegram-link" target="_blank">@NBMRS</a></p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/Only_Mark" class="telegram-link" target="_blank">@OnlyMark</a></p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/Kaminarich_here" class="telegram-link" target="_blank">@Kaminari | AetheriumYT</a></p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/xiastuff" class="telegram-link" target="_blank">@.method get channel</a></p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/klikajatolol" class="telegram-link" target="_blank">@Random Prot</a></p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/yeinzuuarchive" class="telegram-link" target="_blank">@Zuu Archive</a></p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/ryuustuff" class="telegram-link" target="_blank">@Ryuu Yapping</a></p>
+            <p><i class="fab fa-telegram"></i> Channel: <a href="https://t.me/KimelaZPrjkt" class="telegram-link" target="_blank">@KimelaZ Project.</a></p>
             <p>I'm always open to collaboration, feedback, and questions about my projects.</p>
         </section>
     </div>
@@ -793,7 +811,9 @@
 </style>
 
     <script>
-        // Section switcher for About
+        // Tidak ada perubahan di JavaScript, semua sudah otomatis berjalan dengan baik
+        
+        // Section switcher for nav links
         document.querySelectorAll('nav > a').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (this.getAttribute('href').startsWith('#')) {
@@ -804,7 +824,6 @@
                     const target = this.getAttribute('href');
                     document.querySelector(target).classList.add('active');
 
-                    // Smooth scroll to section
                     document.querySelector(target).scrollIntoView({
                         behavior: 'smooth'
                     });
@@ -813,20 +832,18 @@
         });
 
         // Dropdown logic
-        const navImg = document.getElementById('navImg');
+        const menuToggle = document.getElementById('menuToggle');
         const dropdownMenu = document.getElementById('dropdownMenu');
 
-        navImg.addEventListener('click', function(e) {
+        menuToggle.addEventListener('click', function(e) {
             e.stopPropagation();
             dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
         });
 
-        // Hide dropdown when clicking outside
         document.addEventListener('click', function() {
             dropdownMenu.style.display = 'none';
         });
 
-        // Prevent dropdown from closing when clicking inside
         dropdownMenu.addEventListener('click', function(e) {
             e.stopPropagation();
         });
@@ -842,14 +859,12 @@
                 const target = this.getAttribute('href');
                 document.querySelector(target).classList.add('active');
 
-                // Smooth scroll to section
                 document.querySelector(target).scrollIntoView({
                     behavior: 'smooth'
                 });
             });
         });
 
-        // Add animation when scrolling to sections
         const observerOptions = {
             threshold: 0.1
         };
@@ -866,36 +881,30 @@
             observer.observe(section);
         });
 
-        // Device card click handler - now only triggers when clicking outside links
         document.querySelectorAll('.device-card').forEach(card => {
             card.addEventListener('click', function(e) {
-                // Don't do anything if user clicked on a link
                 if (e.target.tagName === 'A' || e.target.closest('a')) {
                     return;
                 }
 
                 const deviceName = this.querySelector('.device-name').textContent;
                 alert(`You selected ${deviceName}. Redirecting to download page...`);
-                // You can add specific device download links here
                 window.location.href = "https://sourceforge.net/projects/damarrr/files/release-final/";
             });
         });
 
-        // Dark Mode Toggle
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = themeToggle.querySelector('i');
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
-        // Check for saved theme preference or use system preference
         const currentTheme = localStorage.getItem('theme') || 
-                           (prefersDarkScheme.matches ? 'dark' : 'light');
+                               (prefersDarkScheme.matches ? 'dark' : 'light');
 
         if (currentTheme === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
             themeIcon.classList.replace('fa-moon', 'fa-sun');
         }
 
-        // Toggle theme
         themeToggle.addEventListener('click', function() {
             const currentTheme = document.body.getAttribute('data-theme');
 
