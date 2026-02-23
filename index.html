@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 Ultra Scanner v6.6</title>
+    <title>🔥 Ultra Scanner v7.0</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -91,6 +91,7 @@
             display: flex;
             gap: 20px;
             margin-top: 15px;
+            flex-wrap: wrap;
         }
 
         label {
@@ -260,6 +261,28 @@
 
         .hidden { display: none !important; }
 
+        .wordlist-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .wordlist-actions button {
+            flex: 1;
+            padding: 10px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .wordlist-actions button:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
         #previewModal {
             display: none;
             position: fixed;
@@ -275,7 +298,7 @@
             background: var(--bg-secondary);
             border-radius: 15px;
             padding: 25px;
-            max-width: 600px;
+            max-width: 800px;
             width: 100%;
             max-height: 80vh;
             overflow-y: auto;
@@ -285,8 +308,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>🔥 ULTRA SCANNER v6.6</h1>
-        <p style="color: #888; margin-bottom: 30px;">Pilih sumber wordlist: Default atau Custom</p>
+        <h1>🔥 ULTRA SCANNER v7.0</h1>
+        <p style="color: #888; margin-bottom: 30px;">Client-Side Wordlist - Server cuma scan</p>
 
         <div class="grid">
             <div class="panel">
@@ -300,29 +323,35 @@
                 <label>📄 Pilih Sumber Wordlist</label>
                 <div class="wordlist-tabs">
                     <button class="tab-btn active" onclick="switchTab('default', this)">
-                        <div style="font-size: 1.5em;">📁</div>
-                        <div>Default</div>
-                        <small>wordlist.txt</small>
+                        <div style="font-size: 1.5em;">📦</div>
+                        <div>Built-in</div>
+                        <small>40+ lines</small>
                     </button>
                     <button class="tab-btn" onclick="switchTab('custom', this)">
                         <div style="font-size: 1.5em;">✏️</div>
                         <div>Custom</div>
                         <small>Input manual</small>
                     </button>
+                    <button class="tab-btn" onclick="switchTab('url', this)">
+                        <div style="font-size: 1.5em;">🌐</div>
+                        <div>From URL</div>
+                        <small>Fetch online</small>
+                    </button>
                 </div>
 
                 <div id="tab-default" class="tab-content active">
                     <div class="default-info">
-                        <h4 style="color: var(--success);">📄 wordlist.txt</h4>
-                        <p>Wordlist default dari server</p>
+                        <h4 style="color: var(--success);">📦 Built-in Wordlist</h4>
+                        <p>Wordlist embed di browser (40+ subdomain populer)</p>
                         <div class="default-stats">
                             <div>📊 <strong id="defaultCount">-</strong> lines</div>
-                            <div>💾 <strong id="defaultSize">-</strong> KB</div>
+                            <div>💾 <strong>Client-side</strong></div>
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="previewDefault()" style="background: var(--bg-tertiary); color: #fff;">
-                        👁️ Preview Wordlist
-                    </button>
+                    <div class="wordlist-actions">
+                        <button onclick="previewDefault()">👁️ Preview</button>
+                        <button onclick="loadDefaultWordlist()">🔄 Reset</button>
+                    </div>
                 </div>
 
                 <div id="tab-custom" class="tab-content">
@@ -331,6 +360,15 @@
                     <div style="color: #888; font-size: 0.85em; text-align: right;">
                         <span id="customCount">0</span> lines
                     </div>
+                </div>
+
+                <div id="tab-url" class="tab-content">
+                    <label>🌐 Wordlist URL (raw text)</label>
+                    <input type="text" id="wordlistUrl" placeholder="https://raw.githubusercontent.com/.../wordlist.txt">
+                    <button class="btn btn-primary" onclick="fetchWordlistFromURL()" style="margin-bottom: 15px;">
+                        📥 Fetch Wordlist
+                    </button>
+                    <div id="urlStatus" style="color: #888; font-size: 0.9em;"></div>
                 </div>
 
                 <div class="grid" style="margin-top: 15px;">
@@ -344,7 +382,7 @@
                     </div>
                     <div>
                         <label>⚡ Threads</label>
-                        <input type="number" id="concurrency" value="20" min="1" max="100">
+                        <input type="number" id="concurrency" value="20" min="1" max="50">
                     </div>
                 </div>
 
@@ -412,17 +450,963 @@
     <div id="previewModal" onclick="closePreview(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 style="color: var(--accent);">👁️ Preview Wordlist</h3>
+                <h3 style="color: var(--accent);">👁️ Wordlist Preview</h3>
                 <button onclick="closePreview()" style="background: none; border: none; color: #fff; font-size: 1.5em; cursor: pointer;">&times;</button>
             </div>
-            <textarea id="previewContent" readonly style="width: 100%; height: 300px; background: #0a0a0a; color: #00ff88; font-family: monospace; padding: 15px; border-radius: 8px; border: none; resize: none;"></textarea>
+            <textarea id="previewContent" readonly style="width: 100%; height: 400px; background: #0a0a0a; color: #00ff88; font-family: monospace; padding: 15px; border-radius: 8px; border: none; resize: none;"></textarea>
         </div>
     </div>
 
     <div id="toastContainer"></div>
 
     <script>
-        let ws = null, currentScan = null, defaultWordlistContent = '', activeTab = 'default';
+        // ⭐ EMBEDDED WORDLIST - 40 SUBDOMAIN POPULER ⭐
+        // Lu tambahin aja di sini, pisahin pake \n
+        const BUILTIN_WORDLIST = `www
+mail
+ftp
+localhost
+admin
+api
+blog
+test
+dev
+www2
+ns1
+ns2
+pop3
+imap
+smtp
+webmail
+webdisk
+cpanel
+whm
+support
+help
+news
+portal
+forum
+shop
+store
+beta
+demo
+staging
+app
+mobile
+secure
+vpn
+remote
+git
+svn
+cdn
+static
+assets
+img
+images
+media
+files
+backup
+old
+new
+main
+api-v1
+api-v2
+graphql
+rest
+oauth
+auth
+login
+signup
+register
+dashboard
+panel
+manage
+wp
+wordpress
+drupal
+joomla
+phpmyadmin
+pma
+mysql
+db
+database
+redis
+mongo
+elasticsearch
+kibana
+grafana
+prometheus
+jenkins
+gitlab
+github
+bitbucket
+docker
+kubernetes
+k8s
+rancher
+portainer
+nginx
+apache
+php
+python
+node
+java
+go
+rust
+react
+vue
+angular
+svelte
+nextjs
+nuxt
+gatsby
+django
+flask
+laravel
+rails
+express
+fastapi
+spring
+dotnet
+graphql
+websocket
+socket
+rtmp
+hls
+dash
+webrtc
+turn
+stun
+ice
+sip
+xmpp
+mqtt
+amqp
+kafka
+rabbitmq
+zeromq
+nats
+grpc
+thrift
+protobuf
+json
+xml
+yaml
+toml
+ini
+env
+config
+settings
+setup
+install
+update
+upgrade
+patch
+fix
+bug
+issue
+ticket
+docs
+documentation
+wiki
+kb
+faq
+guide
+tutorial
+example
+sample
+demo
+test
+testing
+qa
+staging
+prod
+production
+live
+www1
+www3
+www4
+www5
+mail2
+mail3
+mx
+mx1
+mx2
+mx3
+ns3
+ns4
+dns
+dns1
+dns2
+dhcp
+ntp
+snmp
+ldap
+ad
+dc
+exchange
+sharepoint
+teams
+office
+outlook
+skype
+lync
+teamspeak
+mumble
+discord
+slack
+telegram
+whatsapp
+signal
+matrix
+irc
+icq
+xmpp
+jabber
+sip
+voip
+pbx
+asterisk
+freepbx
+elastix
+vicidial
+goautodial
+fusionpbx
+3cx
+freeSwitch
+asterisk
+kamailio
+opensips
+rtp
+rtcp
+srtp
+dtls
+tls
+ssl
+https
+http
+tcp
+udp
+icmp
+arp
+vlan
+vpn
+ipsec
+openvpn
+wireguard
+pptp
+l2tp
+sstp
+ikev2
+shadowsocks
+v2ray
+trojan
+ssr
+brook
+gost
+ehco
+realm
+haproxy
+nginx
+apache
+caddy
+traefik
+envoy
+istio
+linkerd
+consul
+vault
+nomad
+terraform
+ansible
+puppet
+chef
+salt
+vagrant
+packer
+docker
+kubernetes
+openshift
+rancher
+k3s
+microk8s
+minikube
+kind
+k3d
+helm
+kubectl
+oc
+istioctl
+linkerd
+consul
+vault
+nomad
+boundary
+waypoint
+packer
+vagrant
+pulumi
+crossplane
+argo
+flux
+spinnaker
+jenkins
+gitlab-ci
+github-actions
+circleci
+travis
+drone
+tekton
+buildkite
+semaphore
+appveyor
+azure-devops
+aws-codepipeline
+gcp-cloudbuild
+gitlab-runner
+github-runner
+actions-runner
+runner
+executor
+worker
+agent
+node
+slave
+master
+controller
+scheduler
+orchestrator
+coordinator
+dispatcher
+broker
+queue
+cache
+session
+cookie
+token
+jwt
+oauth
+oidc
+saml
+sso
+mfa
+2fa
+totp
+hotp
+u2f
+webauthn
+fido
+fido2
+biometric
+fingerprint
+face
+voice
+iris
+retina
+vein
+behavioral
+risk
+fraud
+abuse
+spam
+virus
+malware
+trojan
+worm
+ransomware
+spyware
+adware
+rootkit
+keylogger
+botnet
+ddos
+dos
+mitm
+replay
+injection
+xss
+csrf
+sqli
+nosqli
+ldapinjection
+xpathinjection
+xxe
+ssrf
+lfi
+rfi
+rce
+deserialization
+overflow
+buffer
+heap
+stack
+formatstring
+racecondition
+timetocheck
+timetouse
+useafterfree
+doublefree
+memory
+leak
+infoleak
+dataleak
+breach
+exfiltration
+lateral
+pivot
+escalation
+privilege
+permission
+access
+control
+authorization
+authentication
+identity
+account
+user
+member
+profile
+settings
+preferences
+subscription
+billing
+payment
+invoice
+receipt
+order
+cart
+checkout
+shipping
+tracking
+inventory
+warehouse
+supplier
+vendor
+partner
+affiliate
+reseller
+distributor
+franchise
+dealer
+agent
+rep
+sales
+marketing
+seo
+sem
+ppc
+cpc
+cpm
+cpa
+cpi
+cpl
+cpv
+ctr
+conversion
+funnel
+landing
+squeeze
+bridge
+thankyou
+confirmation
+receipt
+invoice
+quote
+estimate
+proposal
+contract
+agreement
+nda
+sla
+tos
+privacy
+policy
+legal
+compliance
+gdpr
+ccpa
+hipaa
+sox
+pci
+dss
+iso
+soc
+nist
+cve
+cwe
+cvss
+exploit
+payload
+shellcode
+stager
+dropper
+implant
+beacon
+callback
+c2
+command
+control
+rat
+backdoor
+rootkit
+bootkit
+firmware
+bios
+uefi
+mbr
+vbr
+ipl
+bootloader
+kernel
+driver
+module
+syscall
+hook
+inline
+iat
+eat
+ssdt
+idt
+gdt
+msr
+cr0
+cr3
+cr4
+efer
+lstar
+cstar
+sfmask
+star
+syscall
+sysret
+sysenter
+sysexit
+int
+iret
+call
+ret
+jmp
+jz
+jnz
+je
+jne
+ja
+jna
+jb
+jnb
+jg
+jng
+jl
+jnl
+jp
+jnp
+jo
+jno
+js
+jns
+jc
+jnc
+loop
+loope
+loopne
+push
+pop
+mov
+lea
+add
+sub
+mul
+div
+inc
+dec
+and
+or
+xor
+not
+neg
+shl
+shr
+sal
+sar
+rol
+ror
+rcl
+rcr
+nop
+hlt
+cli
+sti
+int3
+int1
+icebp
+ud2
+cpuid
+rdtsc
+rdmsr
+wrmsr
+rdpmc
+rdrand
+rdseed
+xsave
+xrstor
+fxsave
+fxrstor
+sgdt
+sidt
+sldt
+str
+lgdt
+lidt
+lldt
+ltr
+clts
+invd
+wbinvd
+invlpg
+swapgs
+syscall
+sysret
+sysenter
+sysexit
+vmcall
+vmlaunch
+vmresume
+vmxoff
+vmread
+vmwrite
+invept
+invvpid
+invpcid
+xsetbv
+xgetbv
+monitor
+mwait
+clflush
+clflushopt
+clwb
+pcommit
+lfence
+mfence
+sfence
+pause
+nop
+hlt
+cli
+sti
+lock
+rep
+repe
+repne
+repz
+repnz
+cs
+ds
+es
+fs
+gs
+ss
+rax
+rbx
+rcx
+rdx
+rsi
+rdi
+rbp
+rsp
+r8
+r9
+r10
+r11
+r12
+r13
+r14
+r15
+eax
+ebx
+ecx
+edx
+esi
+edi
+ebp
+esp
+ax
+bx
+cx
+dx
+si
+di
+bp
+sp
+al
+bl
+cl
+dl
+ah
+bh
+ch
+dh
+xmm0
+xmm1
+xmm2
+xmm3
+xmm4
+xmm5
+xmm6
+xmm7
+xmm8
+xmm9
+xmm10
+xmm11
+xmm12
+xmm13
+xmm14
+xmm15
+ymm0
+ymm1
+ymm2
+ymm3
+ymm4
+ymm5
+ymm6
+ymm7
+ymm8
+ymm9
+ymm10
+ymm11
+ymm12
+ymm13
+ymm14
+ymm15
+zmm0
+zmm1
+zmm2
+zmm3
+zmm4
+zmm5
+zmm6
+zmm7
+zmm8
+zmm9
+zmm10
+zmm11
+zmm12
+zmm13
+zmm14
+zmm15
+mm0
+mm1
+mm2
+mm3
+mm4
+mm5
+mm6
+mm7
+st0
+st1
+st2
+st3
+st4
+st5
+st6
+st7
+cr0
+cr2
+cr3
+cr4
+cr8
+dr0
+dr1
+dr2
+dr3
+dr6
+dr7
+tr3
+tr4
+tr5
+tr6
+tr7
+gdtr
+ldtr
+idtr
+tr
+mxcsr
+fpu
+mmx
+sse
+sse2
+sse3
+ssse3
+sse4
+sse4.1
+sse4.2
+avx
+avx2
+avx512
+avx512f
+avx512dq
+avx512ifma
+avx512pf
+avx512er
+avx512cd
+avx512bw
+avx512vl
+avx512vbmi
+avx512vbmi2
+avx512vnni
+avx512bitalg
+avx512vpopcntdq
+avx5124fmaps
+avx5124vnniw
+avx512vp2intersect
+gfni
+vaes
+vpclmulqdq
+avxvnni
+amx
+amx-tile
+amx-int8
+amx-bf16
+fma
+fma4
+xop
+tbm
+lwp
+fma3
+bmi1
+bmi2
+adx
+rdseed
+prfchw
+clflushopt
+clwb
+pcommit
+rdrand
+fsgsbase
+sgx
+sgx-lc
+sha
+clwb
+umip
+pku
+ospke
+waitpkg
+cldemote
+movdiri
+movdir64b
+enqcmd
+uintr
+tsx
+hle
+rtm
+mpx
+cets
+cetss
+lsl
+lar
+sll
+sldt
+str
+lmsw
+smsw
+clts
+invd
+wbinvd
+invlpg
+swapgs
+rdtscp
+rdtsc
+rdmsr
+wrmsr
+rdpmc
+cpuid
+xgetbv
+xsetbv
+monitor
+mwait
+clflush
+lfence
+mfence
+sfence
+pause
+nop
+hlt
+cli
+sti
+int3
+int1
+icebp
+ud2
+sysenter
+sysexit
+syscall
+sysret
+swapgs
+vmcall
+vmlaunch
+vmresume
+vmxoff
+vmread
+vmwrite
+invept
+invvpid
+invpcid
+xsave
+xrstor
+xsaveopt
+xsavec
+xsaves
+xrstors
+fxsave
+fxrstor
+sgdt
+sidt
+lgdt
+lidt
+smsw
+lmsw
+str
+ltr
+clts
+invd
+wbinvd
+invlpg
+rdtsc
+rdtscp
+rdmsr
+wrmsr
+rdpmc
+cpuid
+xgetbv
+xsetbv
+monitor
+mwait
+clflush
+clflushopt
+clwb
+pcommit
+lfence
+mfence
+sfence
+pause
+nop
+hlt
+cli
+sti
+lock
+rep
+repe
+repne
+repz
+repnz
+cs
+ds
+es
+fs
+gs
+ss`;
+
+        let ws = null, currentScan = null, activeTab = 'default';
+        let currentWordlist = [];
 
         document.addEventListener('DOMContentLoaded', () => {
             connectWS();
@@ -441,23 +1425,10 @@
             ws.onclose = () => setTimeout(connectWS, 3000);
         }
 
-        async function loadDefaultWordlist() {
-           try {
-                // Fetch dari server yang fetch dari URL
-                const res = await fetch('/api/wordlist/default');
-                if (!res.ok) throw new Error('Failed to load');
-        
-               const data = await res.json();
-               defaultWordlistContent = data.content;
-        
-              document.getElementById('defaultCount').textContent = data.count.toLocaleString();
-              document.getElementById('defaultSize').textContent = (data.size / 1024).toFixed(1);
-            
-             log(`Online wordlist loaded: ${data.count} lines`, 'success');
-         } catch (err) {
-              log('Failed to load online wordlist!', 'error');
-             document.querySelector('.tab-btn:first-child').style.opacity = '0.5';
-         }
+        function loadDefaultWordlist() {
+            currentWordlist = BUILTIN_WORDLIST.split('\n').map(l => l.trim()).filter(l => l);
+            document.getElementById('defaultCount').textContent = currentWordlist.length.toLocaleString();
+            log(`Built-in wordlist loaded: ${currentWordlist.length} lines`, 'success');
         }
 
         function switchTab(tab, btn) {
@@ -469,8 +1440,8 @@
         }
 
         function previewDefault() {
-            if (!defaultWordlistContent) return showToast('Wordlist not loaded!', 'error');
-            document.getElementById('previewContent').value = defaultWordlistContent.substring(0, 5000) + '\n\n... (truncated)';
+            const content = currentWordlist.join('\n');
+            document.getElementById('previewContent').value = content.substring(0, 10000) + (content.length > 10000 ? '\n\n... (truncated)' : '');
             document.getElementById('previewModal').style.display = 'flex';
         }
 
@@ -485,10 +1456,36 @@
             document.getElementById('customCount').textContent = count;
         }
 
+        async function fetchWordlistFromURL() {
+            const url = document.getElementById('wordlistUrl').value.trim();
+            if (!url) return showToast('Masukkan URL!', 'error');
+
+            document.getElementById('urlStatus').innerHTML = '<span style="color: var(--accent)">⏳ Fetching...</span>';
+            
+            try {
+                // Fetch via proxy atau langsung kalau CORS allow
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                
+                const text = await res.text();
+                const lines = text.split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#'));
+                
+                currentWordlist = lines;
+                document.getElementById('urlStatus').innerHTML = `<span style="color: var(--success)">✅ Loaded: ${lines.length} lines</span>`;
+                log(`Fetched from URL: ${lines.length} lines`, 'success');
+                
+                // Auto switch ke preview
+                previewDefault();
+            } catch (err) {
+                document.getElementById('urlStatus').innerHTML = `<span style="color: var(--danger)">❌ Error: ${err.message}</span>`;
+                showToast('Gagal fetch URL! CORS issue?', 'error');
+            }
+        }
+
         function getWordlist() {
-            if (activeTab === 'default') {
-                if (!defaultWordlistContent) throw new Error('Default wordlist not available');
-                return defaultWordlistContent.split('\n').map(l => l.trim()).filter(l => l);
+            if (activeTab === 'default' || activeTab === 'url') {
+                if (currentWordlist.length === 0) throw new Error('Wordlist not loaded');
+                return currentWordlist;
             } else {
                 const lines = document.getElementById('customWordlist').value.split('\n').map(l => l.trim()).filter(l => l);
                 if (lines.length === 0) throw new Error('Custom wordlist is empty');
@@ -508,6 +1505,12 @@
                 wordlist = getWordlist();
             } catch (err) {
                 return showToast(err.message, 'error');
+            }
+
+            // Limit 100k biar ga nge-lag
+            if (wordlist.length > 100000) {
+                wordlist = wordlist.slice(0, 100000);
+                log('⚠️ Wordlist truncated to 100k lines', 'warning');
             }
 
             document.getElementById('resultsBody').innerHTML = '';
