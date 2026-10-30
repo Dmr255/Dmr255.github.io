@@ -1,0 +1,17 @@
+{
+  "name": "Dmr255 — Android, Server & Bot Tinkerer",
+  "short_name": "Dmr255",
+  "description": "Portofolio Dmr255 — Android, server, dan otomasi.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#07080a",
+  "theme_color": "#ced857",
+  "icons": [
+    {
+      "src": "assets/avatar.png",
+      "sizes": "420x420",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

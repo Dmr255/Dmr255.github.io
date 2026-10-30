@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 — nyasar, ya? · Dmr255</title>
+<meta name="description" content="Halaman tidak ditemukan.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#07080a">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #07080a;
+    --text: #eceee1;
+    --muted: #9aa090;
+    --accent: #ced857;
+    --line: rgba(236, 240, 214, 0.12);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background:
+      radial-gradient(60% 60% at 50% 0%, rgba(206, 216, 87, 0.12), transparent 65%),
+      var(--bg);
+    color: var(--text);
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(220, 230, 190, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(220, 230, 190, 0.05) 1px, transparent 1px);
+    background-size: 68px 68px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000, transparent 75%);
+    pointer-events: none;
+  }
+  .box { position: relative; width: min(560px, 100%); }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 26px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .brand b { color: var(--accent); font-weight: 500; }
+  .term {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #0a0c0b;
+    overflow: hidden;
+    box-shadow: 0 30px 90px -45px rgba(0, 0, 0, 0.95);
+  }
+  .bar {
+    display: flex;
+    gap: 6px;
+    padding: 11px 15px;
+    border-bottom: 1px solid rgba(236, 240, 214, 0.08);
+  }
+  .bar i { width: 9px; height: 9px; border-radius: 50%; background: #2a2f28; }
+  .bar i:first-child { background: #c66a5a; }
+  .bar i:nth-child(2) { background: #c4b45a; }
+  .bar i:last-child { background: #7f9d59; }
+  .body {
+    padding: 30px 26px 34px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12.5px;
+    line-height: 2.1;
+    color: #8f9684;
+  }
+  .body .p { color: var(--accent); margin-right: 8px; }
+  .body .w { color: #f0f2e4; }
+  h1 {
+    margin: 26px 0 10px;
+    font-size: clamp(2.1rem, 7vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--text);
+  }
+  p { margin: 0 0 24px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #0b0c05;
+    font-size: 13.5px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .btn:hover { filter: brightness(1.06); }
+  .ghost {
+    margin-left: 8px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--line);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+  <div class="box">
+    <span class="brand"><b>&gt;_</b> dmr255</span>
+    <div class="term">
+      <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="body">
+        <div><span class="p">$</span><span class="w">curl /halaman-ini</span></div>
+        <div>curl: (404) halaman tidak ditemukan</div>
+        <div><span class="p">$</span><span class="w">cd ~</span></div>
+        <h1>Nyasar, ya?</h1>
+        <p>URL-nya mungkin salah ketik, atau halamannya sudah dipindah. Tidak masalah — kita kembali ke jalur yang benar.</p>
+        <a class="btn" href="./">← Kembali ke beranda</a>
+        <a class="btn ghost" href="https://github.com/Dmr255" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

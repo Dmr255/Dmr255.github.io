@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>OG image — Dmr255</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080a;
+    --text: #eceee1;
+    --muted: #9aa090;
+    --accent: #ced857;
+    --line: rgba(236, 240, 214, 0.14);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    width: 1200px;
+    height: 630px;
+    margin: 0;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  }
+  .stage {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    padding: 58px 64px 54px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background:
+      radial-gradient(58% 75% at 8% -10%, rgba(206, 216, 87, 0.18), transparent 62%),
+      radial-gradient(45% 60% at 105% 105%, rgba(140, 170, 60, 0.16), transparent 62%),
+      var(--bg);
+    overflow: hidden;
+  }
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(220, 230, 190, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(220, 230, 190, 0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 75% 80% at 50% 40%, #000, transparent 78%);
+    mask-image: radial-gradient(ellipse 75% 80% at 50% 40%, #000, transparent 78%);
+  }
+  .stage::after {
+    content: "";
+    position: absolute;
+    inset: 22px;
+    border: 1px solid rgba(236, 240, 214, 0.08);
+    border-radius: 20px;
+    pointer-events: none;
+  }
+  .top, .mid, .bottom { position: relative; z-index: 2; }
+  .top { display: flex; align-items: center; justify-content: space-between; }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .brand b { color: var(--accent); font-weight: 600; }
+  .caret { width: 9px; height: 20px; background: var(--accent); margin-left: -2px; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 15px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    color: var(--muted);
+    background: rgba(13, 16, 19, 0.6);
+  }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+
+  .mid { display: flex; align-items: center; justify-content: space-between; gap: 50px; }
+
+  h1 {
+    margin: 0 0 20px;
+    font-size: 78px;
+    line-height: 0.97;
+    letter-spacing: -0.05em;
+    font-weight: 800;
+  }
+  h1 span {
+    background: linear-gradient(100deg, #f3f5e7 0%, #ced857 82%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .sub {
+    margin: 0;
+    max-width: 600px;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .sub b { color: var(--text); font-weight: 600; }
+
+  .portrait {
+    position: relative;
+    flex-shrink: 0;
+    width: 230px;
+    height: 230px;
+    display: grid;
+    place-items: center;
+  }
+  .portrait::before {
+    content: "";
+    position: absolute;
+    inset: -18px;
+    border-radius: 50%;
+    border: 1px solid rgba(206, 216, 87, 0.22);
+  }
+  .portrait::after {
+    content: "";
+    position: absolute;
+    inset: -40px;
+    border-radius: 50%;
+    border: 1px dashed rgba(206, 216, 87, 0.14);
+  }
+  .portrait img {
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    border: 3px solid var(--accent);
+    background: #f0f0f0;
+    object-fit: cover;
+  }
+
+  .bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .chips { display: flex; gap: 9px; }
+  .chips span {
+    padding: 7px 13px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12.5px;
+    color: var(--muted);
+    background: rgba(13, 16, 19, 0.55);
+  }
+  .chips span i { color: var(--accent); font-style: normal; }
+  .url {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.01em;
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="top">
+      <span class="brand"><b>&gt;_</b> dmr255<span class="caret"></span></span>
+      <span class="badge"><span class="pulse"></span> Indonesia · open for collaboration</span>
+    </div>
+
+    <div class="mid">
+      <div>
+        <h1>Bongkar Android.<br>Bangun <span>server</span>.<br>Otomasi sisanya.</h1>
+        <p class="sub"><b>Android tinkerer, infra builder, bot developer.</b><br>65 repo publik sejak 2022.</p>
+      </div>
+      <div class="portrait">
+        <img src="../assets/avatar.png" alt="">
+      </div>
+    </div>
+
+    <div class="bottom">
+      <div class="chips">
+        <span><i>#</i> android</span>
+        <span><i>#</i> selfhosted</span>
+        <span><i>#</i> automation</span>
+      </div>
+      <span class="url">github.com/Dmr255</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Dmr255">
+  <rect width="64" height="64" rx="14" fill="#f0f0f0"/>
+  <g fill="#c2c35c">
+    <path d="M22 8h8v8h-8z"/>
+    <path d="M36 8h8v8h-8z"/>
+    <path d="M14 16h36v14H14z"/>
+    <path d="M14 38h36v18H14v-8h11v-10zm25 0v10h11v-10z"/>
+  </g>
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="13.25" fill="none" stroke="#c2c35c" stroke-opacity=".35" stroke-width="1.5"/>
+</svg>
